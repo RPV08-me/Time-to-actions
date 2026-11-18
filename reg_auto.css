@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Abhaya Libre", serif;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Чтобы футер был внизу */
+}
+
+header {
+    background-color: #E7CEF2;
+    width: 100%;
+}
+
+.header_first {
+    display: flex;
+    align-items: center;
+    padding: 20px 5%;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 5%;
+    width: 100%;
+}
+
+.title {
+    color: #D09CD0;
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.reg_image {
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.ra_form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.reg_auto_input {
+    width: 100%;
+    padding: 20px 30px;
+    border: none;
+    font-size: 24px;
+    font-family: inherit;
+    color: #D09CD0;
+    outline: none;
+    border-radius: 30px;
+    background-color: #F1E6F6;
+}
+
+.reg_auto_input::placeholder {
+    color: #D09CD0;
+    opacity: 0.7;
+}
+
+.reg_auto_button {
+    background-color: #EAB7EA;
+    border: none;
+    padding: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 20px;
+    width: 100%;
+    width: 300px;
+    justify-self: center;
+}
+
+.reg_auto_button:hover {
+    background-color: #d1b0e6;
+}
+
+.ra_a {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.ra_a a {
+    font-size: 20px;
+    color: #EAB7EA;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.ra_a a:hover {
+    color: #D09CD0;
+    text-decoration: underline;
+}
+
+footer {
+    background-color: #E7CEF2;
+    width: 100%;
+    padding: 20px 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+footer .image_footer:first-child {
+    justify-self: start;
+}
+
+footer .image_footer:last-child {
+    justify-self: end;
+}
+
+.image_footer {
+    height: 62px;
+    width: auto;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    
+    .logo {
+        height: 60px;
+    }
+
+    .ra_form {
+        gap: 15px;
+    }
+
+    .reg_auto_input {
+        padding: 15px 20px;
+        font-size: 18px;
+    }
+
+    .reg_auto_button {
+        padding: 15px;
+        font-size: 20px;
+    }
+
+    .ra_a a {
+        font-size: 16px;
+    }
+
+    .image_footer {
+        height: 40px;
+    }
+}
