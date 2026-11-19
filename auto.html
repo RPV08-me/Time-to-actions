@@ -18,11 +18,33 @@
     <main>
         <h1 class="title">Авторизация</h1>
         <img class="reg_image" src="Авторизоция_картинка.webp" alt="Регистрация">
-        <form class="ra_form" action="#">
-            <input class="reg_auto_input" type="email" placeholder="Почта" required>
-            <input class="reg_auto_input" type="password" placeholder="Пароль" required>
-        </form>
-        <button class="reg_auto_button" type="submit">Авторизоваться</button>    
+       <form class="ra_form" id="loginForm" novalidate>
+
+    <div class="input_group">
+        <input 
+            class="reg_auto_input" 
+            type="email" 
+            id="email"
+            name="email"
+            placeholder="Почта" 
+            required
+        >
+        <span class="error_message" id="email_error"></span>
+    </div>
+
+    <div class="input_group">
+        <input 
+            class="reg_auto_input" 
+            type="password" 
+            id="password"
+            name="password"
+            placeholder="Пароль" 
+            required
+            minlength="8">
+            <span class="error_message" id="password_error"></span>
+    </div>
+    </form>
+        <button class="reg_auto_button" type="submit" form="loginForm">Авторизоваться</button>    
         <div class="ra_a">
             <a href="registration.html">Зарегистрируйтесь, если у вас нет аккаунта</a>
         </div>
@@ -34,5 +56,10 @@
         <img class="image_footer" src="ВК.webp" alt="Вконтакте">
     </footer>
     <script src="script.js"></script>
+    <div class="modal_overlay" id="modalOverlay">
+    <div class="modal">
+        <p class="modal_message" id="modalMessage">Форма успешно отправлена.</p>
+        <button class="modal_button" id="modalButton">Хорошо</button>
+    </div>
 </body>
 </html>
