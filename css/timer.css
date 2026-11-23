@@ -62,6 +62,8 @@ main {
     align-items: center;
 }
 
+.timer_input { font-size: 96px; color: #D09CD0; text-align: center; border: none; background: transparent; width: 100%; outline: none; }
+
 .timer_digit {
     font-size: 96px;
     color: #ffffff;

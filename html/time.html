@@ -18,16 +18,10 @@
     <main>
         <section class="timer_display_section">
             <div class="timer_boxes">
-                <div class="timer_box">
-                    <span class="timer_digit" id="hours">00</span>
-                </div>
-                <div class="timer_box">
-                    <span class="timer_digit" id="minutes">00</span>
-                </div>
-                <div class="timer_box">
-                    <span class="timer_digit" id="seconds">00</span>
-                </div>
-            </div>
+    <div class="timer_box"><input type="number" id="hours" value="0" min="0" max="99" class="timer_input"></div>
+    <div class="timer_box"><input type="number" id="minutes" value="25" min="0" max="59" class="timer_input"></div>
+    <div class="timer_box"><input type="number" id="seconds" value="0" min="0" max="59" class="timer_input"></div>
+</div>
             <div class="timer_labels">
                 <span class="timer_label">Часы</span>
                 <span class="timer_label">Минуты</span>
@@ -67,6 +61,6 @@
         <img class="image_footer" src="/img/Лого.webp" alt="Лого">
         <img class="image_footer" src="/img/ВК.webp" alt="Вконтакте">
     </footer>
-    <script src="/js_client/script.js"></script>
+    <script src="/js_client/common.js"></script>
 </body>
 </html>

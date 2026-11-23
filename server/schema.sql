@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     phone VARCHAR(20) NOT NULL,
     password_hash TEXT NOT NULL,
     avatar TEXT,
+    vk_id INTEGER UNIQUE,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -14,7 +15,8 @@ CREATE TABLE IF NOT EXISTS habits (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     image_path TEXT,
     name_habit VARCHAR(50) NOT NULL,
-    color TEXT NOT NULL,
+    color TEXT NOT NULL DEFAULT '#EAB7EA',
+    reminder_time TEXT,
     user_id INTEGER NOT NULL,
     is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -51,7 +53,3 @@ CREATE TABLE IF NOT EXISTS time_records (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id, user_id) REFERENCES time_categories(id, user_id) ON DELETE CASCADE
 );
-
-CREATE INDEX IF NOT EXISTS idx_habits_user ON habits(user_id);
-CREATE INDEX IF NOT EXISTS idx_habit_records_habit ON habit_records(habit_id);
-CREATE INDEX IF NOT EXISTS idx_time_records_user ON time_records(user_id);
