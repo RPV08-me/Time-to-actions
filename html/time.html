@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="/img/Лого.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/css/timer.css">
+    <title>Таймер "Время действий"</title>
+</head>
+<body>
+    <header>
+        <div class="header_first">
+            <img class="logo" src="/img/Лого.webp" alt="Логотип">
+        </div>
+    </header>
+
+    <main>
+        <section class="timer_display_section">
+            <div class="timer_boxes">
+                <div class="timer_box">
+                    <span class="timer_digit" id="hours">00</span>
+                </div>
+                <div class="timer_box">
+                    <span class="timer_digit" id="minutes">00</span>
+                </div>
+                <div class="timer_box">
+                    <span class="timer_digit" id="seconds">00</span>
+                </div>
+            </div>
+            <div class="timer_labels">
+                <span class="timer_label">Часы</span>
+                <span class="timer_label">Минуты</span>
+                <span class="timer_label">Секунды</span>
+            </div>
+            <button class="timer_button" id="timer_start">Начать</button>
+        </section>
+
+        <section class="categories_section">
+            <div class="categories_grid">
+                <div class="category_card" data_category="study">
+                    <div class="category_icon"><img src="/img/Учеба.webp"></div>
+                    <span class="category_name">Учеба</span>
+                    <button class="category_select_btn">Выбрать</button>
+                </div>
+                <div class="category_card" data_category="hobby">
+                    <div class="category_icon"><img src="/img/Хобби.webp"></div>
+                    <span class="category_name">Хобби</span>
+                    <button class="category_select_btn">Выбрать</button>
+                </div>
+                <div class="category_card" data_category="work">
+                    <div class="category_icon"><img src="/img/Работа.webp"></div>
+                    <span class="category_name">Работа</span>
+                    <button class="category_select_btn">Выбрать</button>
+                </div>
+                <div class="category_card" data_category="home">
+                    <div class="category_icon"><img src="/img/Уборка.webp"></div>
+                    <span class="category_name">Домашние дела</span>
+                    <button class="category_select_btn">Выбрать</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <img class="image_footer" src="/img/Макс.webp" alt="Макс">
+        <img class="image_footer" src="/img/Лого.webp" alt="Лого">
+        <img class="image_footer" src="/img/ВК.webp" alt="Вконтакте">
+    </footer>
+    <script src="/js_client/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/Лого.webp" type="image/x-icon">
+    <link rel="stylesheet" href="/css/account.css">
+    <title>Личный кабинет "Время действий"</title>
+</head>
+<body>
+    <header>
+        <div class="header_first">
+            <img class="logo" src="/img/Лого.webp" alt="Логотип">
+        </div>
+    </header>
+
+    <main>
+        <h1 class="greeting_text" id="greetingText">Здравствуйте, Полина!</h1>
+
+        <section class="information_section">
+            <div class="photo_container">
+                <img class="img_information" id="userAvatar" src="/img/Контакт.webp" alt="Аватар">
+                <button class="photo_button">Фото +</button>
+            </div>
+            <div class="information_text">
+                <input class="reg_auto_input" type="text" id="userName" placeholder="Имя">
+                <input class="reg_auto_input" type="email" id="userEmail" placeholder="Почта">
+                <input class="reg_auto_input" type="tel" id="userPhone" placeholder="Телефон">
+            </div>
+        </section>
+
+        <section class="habits_section">
+            <h2 class="section_title">Привычки</h2>
+            
+            <div class="habits_grid" id="habitsGrid">
+                <div class="habit_card">
+                    <div class="habit_icon"></div>
+                    <span class="habit_name">Зарядка</span>
+                </div>
+                <div class="habit_card">
+                    <div class="habit_icon"></div>
+                    <span class="habit_name">Ведение планера</span>
+                </div>
+                <div class="habit_card">
+                    <div class="habit_icon"></div>
+                    <span class="habit_name">Занятие ин. языками</span>
+                </div>
+                <div class="habit_card">
+                    <div class="habit_icon"></div>
+                    <span class="habit_name">Уборка</span>
+                </div>
+            </div>
+            
+            <button class="add_habit_button" id="addHabitBtn">Добавить привычку</button>
+        </section>
+
+        <section class="chart_section">
+            <h2 class="section_title">График привычек</h2>
+            <div class="chart_container">
+                <canvas id="habitsChart"></canvas>
+            </div>
+        </section>
+
+        <section class="time_section">
+            <h2 class="section_title">Время</h2>
+            <div class="time_grid">
+                <div class="time_card">
+                    <div class="time_icon"><img src="/img/Учеба.webp"></div>
+                    <span class="time_name">Учеба</span>
+                    <span class="time_value" id="studyTime">0 часов</span>
+                </div>
+                <div class="time_card">
+                    <div class="time_icon"><img src="/img/Хобби.webp"></div>
+                    <span class="time_name">Хобби</span>
+                    <span class="time_value" id="hobbyTime">0 часов</span>
+                </div>
+                <div class="time_card">
+                    <div class="time_icon"><img src="/img/Работа.webp"></div>
+                    <span class="time_name">Работа</span>
+                    <span class="time_value" id="workTime">0 часов</span>
+                </div>
+                <div class="time_card">
+                    <div class="time_icon"><img src="/img/Уборка.webp"></div>
+                    <span class="time_name">Домашние дела</span>
+                    <span class="time_value" id="homeTime">0 часов</span>
+                </div>
+            </div>
+            <button class="timer_button">Таймер</button>
+        </section>
+
+        <section class="chart_section">
+            <h2 class="section_title">Графики привычек</h2>
+            <div class="chart_container">
+                <canvas id="timeChart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <img class="image_footer" src="/img/Макс.webp" alt="Макс">
+        <img class="image_footer" src="/img/Лого.webp" alt="Лого">
+        <img class="image_footer" src="/img/ВК.webp" alt="Вконтакте">
+    </footer>
+    <script src="/js_client/account.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

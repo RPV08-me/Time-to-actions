@@ -1,0 +1,263 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #E7CEF2;
+    width: 100%;
+}
+
+.header_first {
+    display: flex;
+    align-items: center;
+    padding: 10px 5%;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 5%;
+    width: 100%;
+}
+
+.timer_display_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.timer_boxes {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.timer_box {
+    background-color: #F1E6F6;
+    width: 200px;
+    height: 320px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer_digit {
+    font-size: 96px;
+    color: #ffffff;
+    font-weight: 300;
+}
+
+.timer_labels {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.timer_label {
+    font-size: 20px;
+    color: #D09CD0;
+    text-align: center;
+    width: 200px;
+}
+
+.timer_button {
+    background-color: #EAB7EA;
+    border: none;
+    padding: 15px 40px;
+    margin-top: 30px;
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+}
+
+.timer_button:hover {
+    background-color: #d1b0e6;
+}
+
+.timer_button:active {
+    transform: scale(0.98);
+}
+
+.timer_button.secondary {
+    background-color: #F1E6F6;
+    color: #D09CD0;
+}
+
+.timer_button.secondary:hover {
+    background-color: #E7CEF2;
+}
+
+.categories_section {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+.categories_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.category_card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #F1E6F6;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.category_card:hover {
+    background-color: #E7CEF2;
+}
+
+.category_card.active {
+    border-color: #EAB7EA;
+    box-shadow: 0 5px 15px rgba(208, 156, 208, 0.3);
+}
+
+.category_icon img{
+    width: 62px;
+    height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.category_name {
+    font-size: 20px;
+    color: #D09CD0;
+    flex-grow: 1;
+}
+
+.category_select_btn {
+    background-color: #EAB7EA;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.category_select_btn:hover {
+    background-color: #d1b0e6;
+}
+
+.selected_category_info {
+    font-size: 20px;
+    color: #D09CD0;
+    text-align: center;
+    padding: 15px 30px;
+    background-color: #F1E6F6;
+    border-radius: 20px;
+}
+
+#selectedCategoryName {
+    font-weight: 700;
+}
+
+footer {
+    background-color: #E7CEF2;
+    width: 100%;
+    padding: 10px 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+footer .image_footer:first-child {
+    justify-self: start;
+}
+
+footer .image_footer:last-child {
+    justify-self: end;
+}
+
+.image_footer {
+    height: 50px;
+    width: auto;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .timer_box {
+        width: 90px;
+        height: 120px;
+    }
+    
+    .timer_digit {
+        font-size: 48px;
+    }
+    
+    .timer_label {
+        font-size: 16px;
+        width: 90px;
+    }
+
+    .categories_grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .timer_button {
+        padding: 12px 40px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .timer_box {
+        width: 70px;
+        height: 90px;
+    }
+    
+    .timer_digit {
+        font-size: 36px;
+    }
+    
+    .timer_label {
+        font-size: 14px;
+        width: 70px;
+    }
+    
+    .timer_boxes, .timer_labels {
+        gap: 10px;
+    }
+
+    .settings_input {
+        width: 60px;
+        font-size: 18px;
+    }
+}
