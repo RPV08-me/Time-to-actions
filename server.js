@@ -5,9 +5,20 @@ const bcrypt = require('bcrypt');
 const multer = require('multer');
 const fs = require('fs');
 const db = require('./server/db');
+const webpush = require('web-push');
 
+const vapidKeys = {
+    publicKey: 'BPcEMIVql57jfrwnRfIaR3sc2dD5ZmsuK7kackjY8mK3D4fBbjTF3aYz43dh7h3XwhxbY2G2gtdVdH6Oru87wUM',
+    privateKey: '3Z21IPCBiIO7mbO6ew8SSgslMQcR2zwW1IygAdA3cx8'
+};
 const app = express();
 const PORT = 3000;
+
+webpush.setVapidDetails(
+    'mailto:reshetilo654@yandex.ru', // любой ваш email
+    vapidKeys.publicKey,
+    vapidKeys.privateKey
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -140,3 +151,40 @@ app.get('/api/time/categories', auth, (req, res) => {
 app.post('/api/logout', (req, res) => req.session.destroy(() => res.json({ message: 'OK' })));
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+
+let subscriptions = []; // В реальном проекте лучше сохранять в БД
+
+app.post('/api/push/subscribe', auth, (req, res) => {
+    // В req.body придет объект подписки от браузера
+    subscriptions.push({ userId: req.session.userId, sub: req.body });
+    res.status(201).json({ message: 'Подписка сохранена' });
+});
+
+// Отправка уведомления (вызывайте этот код по таймеру)
+async function sendPushToUser(userId, title, body) {
+    const userSubs = subscriptions.filter(s => s.userId === userId);
+    const payload = JSON.stringify({ title, body });
+
+    for (const item of userSubs) {
+        try {
+            await webpush.sendNotification(item.sub, payload);
+        } catch (err) {
+            console.error('Ошибка отправки push:', err);
+        }
+    }
+}
+
+const cron = require('node-cron');
+
+cron.schedule('* * * * *', () => {
+    const now = new Date();
+    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    
+    // Ищем привычки, время которых совпало
+    const habits = db.prepare(`SELECT * FROM habits WHERE reminder_time = ? AND is_active = 1`).all(currentTime);
+    
+    habits.forEach(h => {
+        // Отправляем push-уведомление пользователю h.user_id
+        sendPushToUser(h.user_id, 'Напоминание', `Пора выполнить: ${h.name_habit}`);
+    });
+});

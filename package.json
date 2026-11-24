@@ -27,6 +27,7 @@
     "express-session": "^1.19.0",
     "multer": "^2.5.0",
     "node-cron": "^4.6.0",
-    "vk-io": "^4.10.1"
+    "vk-io": "^4.10.1",
+    "web-push": "^4.0.0"
   }
 }
