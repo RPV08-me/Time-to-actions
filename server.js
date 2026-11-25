@@ -15,7 +15,7 @@ const app = express();
 const PORT = 3000;
 
 webpush.setVapidDetails(
-    'mailto:reshetilo654@yandex.ru', // любой ваш email
+    'mailto:reshetilo654@yandex.ru',
     vapidKeys.publicKey,
     vapidKeys.privateKey
 );
@@ -30,6 +30,11 @@ app.use(session({
 
 app.use(express.static(__dirname));
 app.use('/html', express.static(path.join(__dirname, 'html')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/img', express.static(path.join(__dirname, 'img')));
+app.use('/js_client', express.static(path.join(__dirname, 'js_client')));
+
+app.get('/', (req, res) => res.redirect('/html/main.html'));
 
 const uploadDir = path.join(__dirname, 'img', 'uploads');
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
@@ -53,7 +58,7 @@ app.post('/api/register', async (req, res) => {
 
         req.session.userId = result.lastInsertRowid;
         res.status(201).json({ message: 'OK' });
-    } catch (e) { res.status(500).json({ error: 'Ошибка сервера' }); }
+    } catch (e) { console.error(e); res.status(500).json({ error: 'Ошибка сервера' }); }
 });
 
 app.post('/api/login', async (req, res) => {
@@ -103,7 +108,7 @@ app.post('/api/habits', auth, upload.single('image'), (req, res) => {
 
 app.post('/api/habits/:id/check', auth, (req, res) => {
     try {
-        const { date, status } = req.body; // 'completed' или 'skipped'
+        const { date, status } = req.body;
         db.prepare('INSERT OR REPLACE INTO habit_records (habit_id, record_date, status) VALUES (?, ?, ?)')
             .run(req.params.id, date, status);
         res.json({ message: 'OK' });
@@ -111,7 +116,6 @@ app.post('/api/habits/:id/check', auth, (req, res) => {
 });
 
 app.get('/api/time/stats', auth, (req, res) => {
-    // Группируем фактическое время по категориям
     const stats = db.prepare(`
         SELECT c.name_time as name, c.color, SUM(r.actual_seconds) as seconds
         FROM time_records r
@@ -150,41 +154,4 @@ app.get('/api/time/categories', auth, (req, res) => {
 
 app.post('/api/logout', (req, res) => req.session.destroy(() => res.json({ message: 'OK' })));
 
-app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
-
-let subscriptions = []; // В реальном проекте лучше сохранять в БД
-
-app.post('/api/push/subscribe', auth, (req, res) => {
-    // В req.body придет объект подписки от браузера
-    subscriptions.push({ userId: req.session.userId, sub: req.body });
-    res.status(201).json({ message: 'Подписка сохранена' });
-});
-
-// Отправка уведомления (вызывайте этот код по таймеру)
-async function sendPushToUser(userId, title, body) {
-    const userSubs = subscriptions.filter(s => s.userId === userId);
-    const payload = JSON.stringify({ title, body });
-
-    for (const item of userSubs) {
-        try {
-            await webpush.sendNotification(item.sub, payload);
-        } catch (err) {
-            console.error('Ошибка отправки push:', err);
-        }
-    }
-}
-
-const cron = require('node-cron');
-
-cron.schedule('* * * * *', () => {
-    const now = new Date();
-    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-    
-    // Ищем привычки, время которых совпало
-    const habits = db.prepare(`SELECT * FROM habits WHERE reminder_time = ? AND is_active = 1`).all(currentTime);
-    
-    habits.forEach(h => {
-        // Отправляем push-уведомление пользователю h.user_id
-        sendPushToUser(h.user_id, 'Напоминание', `Пора выполнить: ${h.name_habit}`);
-    });
-});
+app.listen(PORT, () => console.log(`Сервер запущен: http://localhost:${PORT}`));
