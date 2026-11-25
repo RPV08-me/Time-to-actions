@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="header_first">
-            <img class="logo" src="/img/Лого.webp" alt="Логотип">
+            <img class="logo" id="logoBack" src="/img/Лого.webp" alt="Логотип">
         </div>
     </header>
 
@@ -31,29 +31,39 @@
 
         <section class="habits_section">
             <h2 class="section_title">Привычки</h2>
-            
-            <div class="habits_grid" id="habitsGrid">
-                <div class="habit_card">
-                    <div class="habit_icon"></div>
-                    <span class="habit_name">Зарядка</span>
-                </div>
-                <div class="habit_card">
-                    <div class="habit_icon"></div>
-                    <span class="habit_name">Ведение планера</span>
-                </div>
-                <div class="habit_card">
-                    <div class="habit_icon"></div>
-                    <span class="habit_name">Занятие ин. языками</span>
-                </div>
-                <div class="habit_card">
-                    <div class="habit_icon"></div>
-                    <span class="habit_name">Уборка</span>
-                </div>
-            </div>
-            
+            <div class="habits_grid" id="habitsGrid"></div>
             <button class="add_habit_button" id="addHabitBtn">Добавить привычку</button>
         </section>
+<div class="modal_overlay" id="habitModal">
+            <div class="modal habit_modal">
+                <div class="habit_modal_header">
+                    <h3>Новая привычка</h3>
+                    <button class="close_modal_btn" id="closeHabitBtn"><img src="/img/Плюсик.webp"></button>
+                </div>
+                
+                <div class="habit_modal_body">
+                    <div class="habit_photo_section">
+                        <div class="habit_preview" id="habitPreview">
+                            <span class="plus_icon"><img src="/img/Фото_модалка.webp"></span>
+                        </div>
+                        <button class="photo_upload_btn" type="button" id="uploadHabitPhotoBtn">Фото +</button>
+                        <input type="file" id="h_img" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="habit_inputs_section">
+                        <input type="text" id="h_name" class="reg_auto_input" placeholder="Название привычки">
+                        
+                        <div class="color_select_wrapper">
+                            <input type="color" id="h_color" value="#EAB7EA">
+                            <span>Цвет</span>
+                        </div>
 
+                        <input type="time" id="h_time" class="reg_auto_input" placeholder="Время">
+                    </div>
+                </div>
+
+                <button class="habit_submit_btn" id="saveHabit">Добавить</button>
+            </div>
+        </div>
         <section class="chart_section">
             <h2 class="section_title">График привычек</h2>
             <div class="chart_container">
@@ -85,22 +95,28 @@
                     <span class="time_value" id="homeTime">0 часов</span>
                 </div>
             </div>
-            <button class="timer_button">Таймер</button>
+            <a href="/html/time.html" class="timer_button" style="display:block; text-align:center; text-decoration:none;">Таймер</a>
         </section>
 
         <section class="chart_section">
-            <h2 class="section_title">Графики привычек</h2>
+            <h2 class="section_title">График времени</h2>
             <div class="chart_container">
                 <canvas id="timeChart"></canvas>
             </div>
         </section>
     </main>
-
+    <div class="modal_overlay" id="modalOverlay">
+        <div class="modal">
+            <p class="modal_message" id="modalMessage"></p>
+            <button class="modal_button" id="modalButton"></button>
+        </div>
+    </div>
     <footer>
         <img class="image_footer" src="/img/Макс.webp" alt="Макс">
         <img class="image_footer" src="/img/Лого.webp" alt="Лого">
         <img class="image_footer" src="/img/ВК.webp" alt="Вконтакте">
     </footer>
+    <button id="scrollTopBtn" title="Наверх">↑</button>
     <script src="/js_client/common.js"></script>
     <script src="/js_client/account.js"></script>
 </body>

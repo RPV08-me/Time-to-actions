@@ -5,13 +5,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         categories = await api('/api/time/categories');
-        const grid = document.querySelector('.categories_grid');
+        const grid = document.querySelector('.categories_grid'); 
         grid.innerHTML = '';
+        
         categories.forEach(c => {
             const card = document.createElement('div');
             card.className = 'category_card';
             card.innerHTML = `<span class="category_name" style="color:${c.color}">${c.name_time}</span>
-                              <button class="category_select_btn" style="background:${c.color}">Выбрать</button>`;
+            <button class="category_select_btn" style="background:${c.color}">Выбрать</button>`;
             card.querySelector('button').onclick = () => {
                 document.querySelectorAll('.category_card').forEach(el => el.classList.remove('active'));
                 card.classList.add('active');
@@ -92,9 +93,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         link.addEventListener('click', (e) => {
             if (isRunning) {
                 e.preventDefault();
-                // Показываем модалку
                 const overlay = document.getElementById('modalOverlay');
-                if (!overlay) return; // если нет — просто выходим
+                if (!overlay) return;
                 document.getElementById('modalMessage').textContent = 'Вы уверены, что хотите прервать таймер?';
                 overlay.classList.add('active');
                 document.getElementById('modalButton').onclick = () => {

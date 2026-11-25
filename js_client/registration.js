@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 username: fields.username.value, email: fields.email.value,
                 phone: fields.phone.value, password: fields.password.value
             });
-            showModal('Успех! Перенаправляем...');
-            setTimeout(() => window.location.href = '/html/auto.html', 1500);
+            showModal('Вы вошли! Перенаправляем в личный кабинет...');
+            setTimeout(() => window.location.href = '/html/account.html', 1500);
         } catch (err) { showModal(err.message, true); }
     });
 });

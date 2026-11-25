@@ -3,7 +3,7 @@ self.addEventListener('push', function(event) {
     const title = data.title || 'Напоминание';
     const options = {
         body: data.body || 'Пора выполнить привычку!',
-        icon: '/img/Лого.webp' // путь к иконке
+        icon: '/img/Лого.webp'
     };
 
     event.waitUntil(

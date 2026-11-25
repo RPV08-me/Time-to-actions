@@ -27,6 +27,7 @@ header {
 .logo {
     height: 60px;
     width: auto;
+    cursor: pointer;
 }
 
 main {
