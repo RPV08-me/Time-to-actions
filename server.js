@@ -100,7 +100,7 @@ app.post('/api/habits', auth, upload.single('image'), (req, res) => {
     try {
         const { name, color, reminder_time } = req.body;
         const image_path = req.file ? '/img/uploads/' + req.file.filename : null;
-        const result = db.prepare('INSERT INTO habits (name_habit, color, reminder_time, image_path, user_id) VALUES (?, ?, ?, ?, ?)')
+        const result = db.prepare('INSERT INTO habits (name_habit, reminder_time, image_path, user_id) VALUES (?, ?, ?, ?, ?)')
             .run(name, color, reminder_time, image_path, req.session.userId);
         res.status(201).json({ id: result.lastInsertRowid });
     } catch (e) { res.status(500).json({ error: 'Ошибка' }); }
@@ -113,6 +113,42 @@ app.post('/api/habits/:id/check', auth, (req, res) => {
             .run(req.params.id, date, status);
         res.json({ message: 'OK' });
     } catch (e) { res.status(500).json({ error: 'Ошибка' }); }
+});
+
+app.get('/api/habits/stats/table', auth, (req, res) => {
+    try {
+        const dates = [];
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            dates.push(d.toISOString().split('T')[0]); // YYYY-MM-DD
+        }
+
+        const habits = db.prepare('SELECT id, name_habit FROM habits WHERE user_id = ? AND is_active = 1').all(req.session.userId);
+        
+        const tableData = habits.map(habit => {
+            const completedDays = dates.map(date => {
+                const record = db.prepare(`
+                    SELECT id FROM habit_records 
+                    WHERE habit_id = ? AND record_date = ? AND status = 'completed'
+                `).get(habit.id, date);
+                return !!record;
+            });
+
+            return {
+                name: habit.name_habit,
+                days: completedDays
+            };
+        });
+
+        res.json({
+            tableData: tableData,
+            labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+        });
+    } catch (e) {
+        console.error('Ошибка в /api/habits/stats/table:', e);
+        res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    }
 });
 
 app.get('/api/time/stats', auth, (req, res) => {

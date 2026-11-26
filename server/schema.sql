@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS habits (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     image_path TEXT,
     name_habit VARCHAR(50) NOT NULL,
-    color TEXT NOT NULL DEFAULT '#EAB7EA',
     reminder_time TEXT,
     user_id INTEGER NOT NULL,
     is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0,1)),

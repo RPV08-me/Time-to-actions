@@ -44,18 +44,13 @@
                 <div class="habit_modal_body">
                     <div class="habit_photo_section">
                         <div class="habit_preview" id="habitPreview">
-                            <span class="plus_icon"><img src="/img/Фото_модалка.webp"></span>
+                            <span class="plus_icon">+</span>
                         </div>
                         <button class="photo_upload_btn" type="button" id="uploadHabitPhotoBtn">Фото +</button>
                         <input type="file" id="h_img" accept="image/*" style="display: none;">
                     </div>
                     <div class="habit_inputs_section">
                         <input type="text" id="h_name" class="reg_auto_input" placeholder="Название привычки">
-                        
-                        <div class="color_select_wrapper">
-                            <input type="color" id="h_color" value="#EAB7EA">
-                            <span>Цвет</span>
-                        </div>
 
                         <input type="time" id="h_time" class="reg_auto_input" placeholder="Время">
                     </div>
@@ -64,10 +59,37 @@
                 <button class="habit_submit_btn" id="saveHabit">Добавить</button>
             </div>
         </div>
-        <section class="chart_section">
-            <h2 class="section_title">График привычек</h2>
-            <div class="chart_container">
-                <canvas id="habitsChart"></canvas>
+        <div class="modal_overlay" id="habitCheckModal">
+    <div class="modal habit_check_modal">
+        <p id="checkHabitText" style="text-align: center; font-size: 24px; color: #D09CD0; font-weight: bold; margin-bottom: 30px;">
+            Вы выполнили?
+        </p>
+        
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button class="modal_button" id="checkHabitYes" style="background: #D09CD0; color: white;">Да</button>
+            <button class="modal_button" id="checkHabitNo" style="background: #f0f0f0; color: #333;">Нет</button>
+        </div>
+    </div>
+</div>
+        <section class="habits_table_section">
+            <h2 class="section_title">Прогресс привычек за неделю</h2>
+            <div class="table_container" style="overflow-x: auto;">
+                <table class="habits_table" id="habitsTable">
+                    <thead>
+                        <tr>
+                            <th>Привычка</th>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th>Сб</th>
+                            <th>Вс</th>
+                        </tr>
+                    </thead>
+                    <tbody id="habitsTableBody">
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -106,9 +128,9 @@
         </section>
     </main>
     <div class="modal_overlay" id="modalOverlay">
-        <div class="modal">
-            <p class="modal_message" id="modalMessage"></p>
-            <button class="modal_button" id="modalButton"></button>
+        <div class="modal" style="text-align: center; padding: 40px 30px; max-width: 400px;">
+            <p class="modal_message" id="modalMessage" style="font-size: 22px; color: #333; margin-bottom: 25px;"></p>
+            <button class="modal_button" id="modalButton" style="background: #D09CD0; color: white; padding: 10px 30px; border-radius: 8px; font-size: 16px; border: none; cursor: pointer;">ОК</button>
         </div>
     </div>
     <footer>
@@ -117,6 +139,7 @@
         <img class="image_footer" src="/img/ВК.webp" alt="Вконтакте">
     </footer>
     <button id="scrollTopBtn" title="Наверх">↑</button>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js_client/common.js"></script>
     <script src="/js_client/account.js"></script>
 </body>

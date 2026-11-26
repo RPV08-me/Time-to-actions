@@ -443,13 +443,11 @@ footer .image_footer:last-child {
     transform: translateY(-3px);
 }
 
-/* Класс для показа кнопки */
 #scrollTopBtn.show {
     opacity: 1;
     visibility: visible;
 }
 
-/* --- Стили для модального окна привычки --- */
 .habit_modal {
     background-color: #ffffff;
     border-radius: 30px;
@@ -600,7 +598,6 @@ footer .image_footer:last-child {
     background-color: #d1b0e6;
 }
 
-/* Оверлей */
 .modal_overlay {
     position: fixed;
     top: 0;
@@ -609,13 +606,13 @@ footer .image_footer:last-child {
     height: 100%;
     background-color: rgba(209, 105, 230, 0.5);
     z-index: 9999;
-    display: none; /* Скрыто по умолчанию */
+    display: none;
     justify-content: center;
     align-items: center;
 }
 
 .modal_overlay.active {
-    display: flex; /* Показывается при клике */
+    display: flex;
 }
 
 @media (max-width: 768px) {
@@ -626,4 +623,90 @@ footer .image_footer:last-child {
     .habit_inputs_section {
         width: 100%;
     }
+}
+
+.habit_check_modal {
+    max-width: 350px;
+    padding: 30px 20px;
+    background-color: #ffffff;
+    border-radius: 30px;
+}
+
+.modal_button {
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.modal_button:hover {
+    opacity: 0.8;
+}
+
+#modalOverlay .modal {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(208, 156, 208, 0.3);
+    animation: modalAppear 0.3s ease-out;
+}
+
+#modalOverlay .modal_button {
+    transition: background 0.2s, transform 0.1s;
+    font-weight: bold;
+}
+
+#modalOverlay .modal_button:hover {
+    background: #c58ac5 !important;
+}
+
+.habits_table_section {
+    width: 100%;
+    margin: 40px 0;
+}
+
+.habits_table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #F1E6F6;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(208, 156, 208, 0.1);
+}
+
+.habits_table th, .habits_table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid #ffffff;
+    color: #D09CD0;
+    font-size: 18px;
+}
+
+.habits_table th {
+    background-color: #EAB7EA;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.habits_table th:first-child,
+.habits_table td:first-child {
+    text-align: left;
+    font-weight: bold;
+    padding-left: 25px;
+}
+
+.habits_table tr:last-child td {
+    border-bottom: none;
+}
+
+.habits_table .check-mark {
+    color: #D09CD0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.habits_table .no-mark {
+    color: #D0C0D0;
+    font-size: 20px;
 }

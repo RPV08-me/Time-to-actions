@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         categories.forEach(c => {
             const card = document.createElement('div');
             card.className = 'category_card';
-            card.innerHTML = `<span class="category_name" style="color:${c.color}">${c.name_time}</span>
-            <button class="category_select_btn" style="background:${c.color}">Выбрать</button>`;
+            card.innerHTML = `<span class="category_name">${c.name_time}</span>
+            <button class="category_select_btn">Выбрать</button>`;
             card.querySelector('button').onclick = () => {
                 document.querySelectorAll('.category_card').forEach(el => el.classList.remove('active'));
                 card.classList.add('active');

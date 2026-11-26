@@ -63,7 +63,14 @@ main {
     align-items: center;
 }
 
-.timer_input { font-size: 96px; color: #D09CD0; text-align: center; border: none; background: transparent; width: 100%; outline: none; }
+.timer_input { 
+    font-size: 96px; 
+    color: #D09CD0; 
+    text-align: center; 
+    border: none; 
+    background: transparent; 
+    width: 100%; 
+    outline: none; }
 
 .timer_digit {
     font-size: 96px;
@@ -138,13 +145,8 @@ main {
     border: 2px solid transparent;
 }
 
-.category_card:hover {
-    background-color: #E7CEF2;
-}
-
 .category_card.active {
     border-color: #EAB7EA;
-    box-shadow: 0 5px 15px rgba(208, 156, 208, 0.3);
 }
 
 .category_icon img{
@@ -304,6 +306,10 @@ footer .image_footer:last-child {
     
     .timer_digit {
         font-size: 36px;
+    }
+
+    .timer_input {
+        font-size: 32px;
     }
     
     .timer_label {

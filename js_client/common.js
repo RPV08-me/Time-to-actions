@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
         logo.onclick = () => window.history.back();
     }
     
-    // Кнопка наверх
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     if (scrollTopBtn) {
         window.addEventListener('scroll', () => {
@@ -17,20 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const Validators = {
     username: (v) => v.trim().length >= 2 ? null : 'Минимум 2 символа',
-    email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : 'Некорректный email',
+    email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : 'Некорректная почта',
     phone: (v) => /^\+?[0-9\s\-()]{10,18}$/.test(v) ? null : 'Некорректный телефон',
-    password: (v) => v.length >= 8 && /[A-Z]/.test(v) && /[0-9]/.test(v) ? null : 'Пароль: 8+ символов, заглавная, цифра',
-    
-    // ВАЖНО: Упростили проверку названия привычки!
+    password: (v) => v.length >= 8 && /[A-Z]/.test(v) && /[0-9]/.test(v) ? null : 'Пароль: 8+ символов, заглавная буква, цифра',
     name: (v) => v && v.trim().length > 0 ? null : 'Введите название'
 };
 
-// ... остальной код без изменений ...
 function setFieldState(input, errorMessage) {
     if (!input) return false;
     const group = input.closest('.input_group');
     if (!group) return false;
-    // ... (остальное как было)
     if (errorMessage) {
         group.classList.add('invalid'); group.classList.remove('valid');
         const errEl = group.querySelector('.error_message');

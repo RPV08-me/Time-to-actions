@@ -16,5 +16,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', reveal);
-    reveal(); // Вызвать один раз при загрузке
+    reveal();
 });
