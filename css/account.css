@@ -191,24 +191,6 @@ main {
     background-color: #d1b0e6;
 }
 
-.chart_section {
-    margin-bottom: 60px;
-}
-
-.chart_container {
-    width: 100%;
-    background-color: #fafafa;
-    border-radius: 20px;
-    padding: 20px;
-    height: 300px; 
-    position: relative;
-}
-
-canvas {
-    width: 100% !important;
-    height: 100% !important;
-}
-
 .time_section {
     margin-bottom: 60px;
 }
@@ -245,11 +227,6 @@ canvas {
     flex-grow: 1;
 }
 
-.time_value {
-    font-size: 32px;
-    color: #D09CD0;
-}
-
 .timer_button {
     display: block;
     margin: 0 auto;
@@ -261,6 +238,7 @@ canvas {
     font-size: 36px;
     cursor: pointer;
     transition: background 0.3s;
+    max-width: 300px;
 }
 
 .timer_button:hover {

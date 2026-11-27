@@ -5,20 +5,47 @@ const bcrypt = require('bcrypt');
 const multer = require('multer');
 const fs = require('fs');
 const db = require('./server/db');
-const webpush = require('web-push');
+const cron = require('node-cron');
+const nodemailer = require('nodemailer');
 
-const vapidKeys = {
-    publicKey: 'BPcEMIVql57jfrwnRfIaR3sc2dD5ZmsuK7kackjY8mK3D4fBbjTF3aYz43dh7h3XwhxbY2G2gtdVdH6Oru87wUM',
-    privateKey: '3Z21IPCBiIO7mbO6ew8SSgslMQcR2zwW1IygAdA3cx8'
-};
 const app = express();
 const PORT = 3000;
 
-webpush.setVapidDetails(
-    'mailto:reshetilo654@yandex.ru',
-    vapidKeys.publicKey,
-    vapidKeys.privateKey
-);
+const transporter = nodemailer.createTransport({
+    host: 'smtp.yandex.ru', 
+    port: 465,
+    secure: true, 
+    auth: {
+        user: 'reshetilo654773@yandex.ru',
+        pass: 'cmgcsobrwysqkpdw'
+    }
+});
+
+transporter.verify((error, success) => {
+    if (error) {
+        console.error('Ошибка SMTP:', error);
+    } else {
+        console.log('SMTP-сервер готов к отправке писем');
+    }
+});
+
+async function sendEmail(to, subject, text) {
+    try {
+        const mailOptions = {
+            from: '"Время действий" <reshetilo654773@yandex.ru>',
+            to: to, // Кому
+            subject: subject, // Тема
+            text: text, // Текст
+        };
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`Письмо успешно отправлено на ${to}:`, info.messageId);
+        return { success: true };
+    } catch (error) {
+        console.error('Ошибка отправки письма:', error);
+        return { success: false, error: error.message };
+    }
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -98,12 +125,16 @@ app.get('/api/habits', auth, (req, res) => {
 
 app.post('/api/habits', auth, upload.single('image'), (req, res) => {
     try {
-        const { name, color, reminder_time } = req.body;
+        const { name, reminder_time } = req.body; 
         const image_path = req.file ? '/img/uploads/' + req.file.filename : null;
-        const result = db.prepare('INSERT INTO habits (name_habit, reminder_time, image_path, user_id) VALUES (?, ?, ?, ?, ?)')
-            .run(name, color, reminder_time, image_path, req.session.userId);
+        const result = db.prepare('INSERT INTO habits (name_habit, reminder_time, image_path, user_id) VALUES (?, ?, ?, ?)')
+            .run(name, reminder_time, image_path, req.session.userId);
+            
         res.status(201).json({ id: result.lastInsertRowid });
-    } catch (e) { res.status(500).json({ error: 'Ошибка' }); }
+    } catch (e) { 
+        console.error('Ошибка при создании привычки:', e);
+        res.status(500).json({ error: 'Ошибка' }); 
+    }
 });
 
 app.post('/api/habits/:id/check', auth, (req, res) => {
@@ -117,11 +148,19 @@ app.post('/api/habits/:id/check', auth, (req, res) => {
 
 app.get('/api/habits/stats/table', auth, (req, res) => {
     try {
+        const today = new Date();
+        const dayOfWeek = today.getDay();
+        const diffToMonday = today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+        const monday = new Date(today.getFullYear(), today.getMonth(), diffToMonday);
+        
         const dates = [];
-        for (let i = 6; i >= 0; i--) {
-            const d = new Date();
-            d.setDate(d.getDate() - i);
-            dates.push(d.toISOString().split('T')[0]); // YYYY-MM-DD
+        for (let i = 0; i < 7; i++) {
+            const nextDay = new Date(monday);
+            nextDay.setDate(monday.getDate() + i);
+            const year = nextDay.getFullYear();
+            const month = String(nextDay.getMonth() + 1).padStart(2, '0');
+            const day = String(nextDay.getDate()).padStart(2, '0');
+            dates.push(`${year}-${month}-${day}`);
         }
 
         const habits = db.prepare('SELECT id, name_habit FROM habits WHERE user_id = ? AND is_active = 1').all(req.session.userId);
@@ -189,5 +228,37 @@ app.get('/api/time/categories', auth, (req, res) => {
 });
 
 app.post('/api/logout', (req, res) => req.session.destroy(() => res.json({ message: 'OK' })));
+
+cron.schedule('* * * * *', async () => {
+    const now = new Date();
+    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+    try {
+        const habitsToRemind = db.prepare(`
+            SELECT h.name_habit, u.email 
+            FROM habits h
+            JOIN users u ON h.user_id = u.id
+            WHERE h.reminder_time = ? AND h.is_active = 1
+        `).all(currentTime);
+
+        if (habitsToRemind.length > 0) {
+            console.log(`[${currentTime}] Найдено привычек для напоминания: ${habitsToRemind.length}`);
+            
+            for (const habit of habitsToRemind) {
+                if (habit.email) {
+                    await sendEmail(
+                        habit.email, 
+                        `Напоминание: ${habit.name_habit}`, 
+                        `Привет! Наступило время для твоей привычки "${habit.name_habit}". Не забудь отметить её на сайте "Время действий"!`
+                    );
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Ошибка в планировщике уведомлений:', e);
+    }
+}, {
+    suppressMissedWarning: true
+});
 
 app.listen(PORT, () => console.log(`Сервер запущен: http://localhost:${PORT}`));
